@@ -6,9 +6,22 @@ class HomeController < ApplicationController
     @stack = ["Rails", "PostgreSQL", "Hotwire", "Solid Queue", "Stripe", "Fly.io", "Claude Code"]
     @location = "Chicago, IL"
     @open_to_work = true
-    @building = { name: "NestingBird", description: "HOA SaaS" }
+
+    @building_projects = [
+      { name: "NestingBird", description: "HOA SaaS", url: "https://nestingbird.co" },
+      { name: "RiseKit", description: "Workforce development platform", url: "https://risekit.co" },
+      { name: "Product Heist", description: "Product discovery community", url: "https://productheist.com" }
+    ]
+
+    @open_source_projects = [
+      { name: "Sage", description: "Natural language reporting Rails engine built on Blazer gem", url: "https://github.com/mrjonesbot/sage" },
+      { name: "Snitch", description: "GitHub Actions monitoring for Rails", url: "https://github.com/mrjonesbot/snitch" },
+      { name: "Highlite", description: "Code highlighting gem", url: "https://github.com/mrjonesbot/highlite" },
+      { name: "Bureau", description: "Coming soon", url: "#" },
+      { name: "Invoiceflow", description: "Coming soon", url: "#" }
+    ]
+
     @latest_post = { title: "Why HOA boards need software, not spreadsheets", url: "#" }
-    @open_source = career_context["projects"].first
   end
 
   private

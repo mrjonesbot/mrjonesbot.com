@@ -1,0 +1,112 @@
+<%= turbo_frame_tag 'overlay' do %>
+  <% chat_id = session[:chat_id] || "new" %>
+  <%= render layout: 'layouts/overlay', locals: {
+    title: "Chat with AI About Nathan",
+    size: 'max-w-4xl',
+    header_actions: (chat_id != "new" ? link_to("Export", export_chat_path(chat_id, format: :txt),
+      class: "text-sm text-gray-500 hover:text-gray-700",
+      style: "text-decoration: none;",
+      target: "_blank") : nil)
+  } do %>
+    <div data-controller="chat-form" style="display: flex; flex-direction: column; height: 100%;">
+      <!-- Messages Area -->
+      <% chat_id = session[:chat_id] || "new" %>
+      <%= turbo_stream_from "chat_#{chat_id}" %>
+
+      <div data-chat-form-target="messages"
+           id="chat_messages"
+           style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6);">
+        <div id="messages">
+          <div style="text-align: center; padding: var(--space-8) 0; color: var(--text-tertiary);">
+            <p class="text-body" style="margin-bottom: var(--space-2);">👋 Hi! I'm an AI that knows Nathan's career story.</p>
+            <p class="text-body">Ask me anything about his experience, achievements, or working style.</p>
+          </div>
+
+          <!-- Suggested Questions -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6);">
+            <% [
+              "What's Nathan's experience with Rails and Hotwire?",
+              "Tell me about Nathan's approach to building SaaS products",
+              "What open source projects has Nathan built?",
+              "How does Nathan approach technical leadership?"
+            ].each do |question| %>
+              <%= button_to ask_chat_path(id: "new", message: question),
+                  method: :post,
+                  data: { turbo_frame: "messages" },
+                  class: "btn btn--ghost",
+                  style: "
+                    text-align: left;
+                    padding: var(--space-4);
+                    border: 1px solid var(--border-medium);
+                    border-radius: var(--radius-md);
+                    background: var(--bg-card-subtle);
+                    color: var(--text-secondary);
+                    font-size: var(--text-base);
+                    transition: all var(--duration-fast) var(--ease-out);
+                    width: 100%;
+                    cursor: pointer;
+                  ",
+                  onmouseover: "this.style.borderColor='var(--accent-border)'; this.style.background='var(--bg-card)'",
+                  onmouseout: "this.style.borderColor='var(--border-medium)'; this.style.background='var(--bg-card-subtle)'" do %>
+                "<%= question %>"
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Form -->
+      <%= form_with(
+        url: ask_chat_path(id: "new"),
+        method: :post,
+        data: {
+          action: "submit->chat-form#submit",
+          turbo_frame: "messages"
+        },
+        class: 'flex items-center gap-3'
+      ) do |f| %>
+        <%= f.text_field :message,
+          placeholder: "Ask about Nathan's experience...",
+          style: "
+            flex: 1;
+            height: 48px;
+            background: var(--bg-card-subtle);
+            color: var(--text-primary);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            border: 1px solid var(--border-medium);
+            font-family: var(--font-sans);
+            font-size: var(--text-base);
+            outline: none;
+            transition: border-color var(--duration-fast) var(--ease-out);
+            min-width: 0;
+            box-sizing: border-box;
+          ",
+          autocomplete: "off",
+          data: { chat_form_target: "input" },
+          onfocus: "this.style.borderColor='var(--accent-border)'",
+          onblur: "this.style.borderColor='var(--border-medium)'"
+        %>
+        <button
+          type="submit"
+          class="btn btn--primary"
+          style="
+            width: 48px;
+            height: 48px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            flex-shrink: 0;
+          "
+          aria-label="Send message"
+        >
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transform: rotate(45deg);">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+        </button>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

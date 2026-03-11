@@ -1,0 +1,45 @@
+<%# Slide-over overlay layout for Turbo Frame content %>
+<div class="fixed inset-0 z-50 overflow-hidden pointer-events-none">
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-gray-500/75 transition-opacity pointer-events-auto"
+         data-action="click->overlay#backdropClose"></div>
+
+    <!-- Slide-over panel -->
+    <div class="pointer-events-auto fixed inset-y-0 right-0 flex max-w-full">
+      <div class="relative w-screen <%= local_assigns[:size] || 'max-w-2xl' %>"
+           style="transform: translateX(100%)"
+           data-controller="overlay"
+           data-overlay-close-url-value="<%= close_overlay_path %>">
+
+        <!-- Panel content -->
+        <div class="card flex h-full flex-col"
+             style="border-radius: 0; border-left: 1px solid var(--border-medium); box-shadow: var(--shadow-popover);">
+
+          <!-- Header -->
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-5); border-bottom: 1px solid var(--border-medium);">
+            <h2 id="slide-over-title" class="text-heading"><%= title %></h2>
+            <div style="display: flex; align-items: center; gap: var(--space-4);">
+              <% if local_assigns[:header_actions] %>
+                <%= header_actions %>
+              <% end %>
+              <%= link_to close_overlay_path,
+                  data: { turbo_frame: 'overlay' },
+                  class: 'text-gray-400 hover:text-gray-500 transition-colors',
+                  aria: { label: 'Close' } do %>
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div style="flex: 1; overflow-y: auto; padding: var(--space-5);">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

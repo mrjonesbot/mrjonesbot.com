@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Mrjonesbot Com" %></title>
+    <title><%= content_for(:title) || "Nathan Jones" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Mrjonesbot Com">
+    <meta name="application-name" content="Nathan Jones">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -31,6 +31,6 @@
   <body data-controller="theme">
     <%= yield %>
 
-    <%= render "chats/overlay" %>
+    <%= turbo_frame_tag "overlay" %>
   </body>
 </html>

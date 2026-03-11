@@ -12,10 +12,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
+  # Overlay close action
+  get '/close_overlay', to: 'actions#close_overlay', as: :close_overlay
+
   # Chat routes
-  resources :chats, only: [:create] do
+  resources :chats, only: [:create, :new] do
     member do
       post :ask
+      get :export
     end
   end
 end

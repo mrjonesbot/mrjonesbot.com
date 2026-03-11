@@ -19,19 +19,56 @@
     <div class="bento-grid">
       <!-- Row 1: Hero Card (col-span-2) -->
       <div class="card col-span-2">
-        <p class="card__label">Full-Stack Engineer</p>
-        <h1 class="text-display" style="margin-bottom: var(--space-4);">Nathan B.</h1>
+        <p class="card__label">Developer, Founder, and Baker</p>
+        <h1 class="text-display" style="margin-bottom: var(--space-4);">Nathan J.</h1>
         <p class="text-body">
-          Building Rails-backed SaaS products. Open source contributor. Writing about systems, APIs, and bootstrapping.
+        I'm Nathan Jones, a software developer based in Chicago, Illinois. I'm the founder of NestingBird, HOA management software for self-managed communities and property managers. I love baking sourdough.
         </p>
       </div>
 
-      <!-- Row 1: Building Card (col-span-1, accent) -->
-      <div class="card card--accent col-span-1">
-        <p class="card__label">Building</p>
-        <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-2);"><%= @building[:name] %></h2>
-        <p style="color: rgba(255,255,255,0.8); font-size: var(--text-base);"><%= @building[:description] %></p>
-      </div>
+      <!-- Row 1: Building Card (col-span-1, accent) - Rotating -->
+      <a
+        href="<%= @building_projects.first[:url] %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="col-span-1"
+        style="text-decoration: none; display: block; position: relative;"
+        data-controller="rotating-card"
+        data-rotating-card-projects-value="<%= @building_projects.to_json %>"
+        data-rotating-card-interval-value="6000"
+        data-action="mouseenter->rotating-card#pause mouseleave->rotating-card#resume"
+      >
+        <!-- Timer indicator -->
+        <div style="position: absolute; top: var(--space-4); right: var(--space-4); z-index: 10;">
+          <svg width="20" height="20" viewBox="0 0 20 20" style="transform: rotate(-90deg);">
+            <circle
+              cx="10"
+              cy="10"
+              r="8"
+              fill="none"
+              stroke="rgba(255,255,255,0.2)"
+              stroke-width="2"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="8"
+              fill="none"
+              stroke="rgba(255,255,255,0.8)"
+              stroke-width="2"
+              stroke-linecap="round"
+              data-rotating-card-target="progress"
+              style="transition: stroke-dashoffset 0.1s linear;"
+            />
+          </svg>
+        </div>
+
+        <div class="card card--accent" data-rotating-card-target="card" style="transition: opacity 0.3s ease, transform 0.3s ease; height: 100%;">
+          <p class="card__label">Building</p>
+          <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-2);" data-card-title><%= @building_projects.first[:name] %></h2>
+          <p style="color: rgba(255,255,255,0.8); font-size: var(--text-base);" data-card-description><%= @building_projects.first[:description] %></p>
+        </div>
+      </a>
 
       <!-- Row 1: Location Card (col-span-1) -->
       <div class="card col-span-1">
@@ -73,27 +110,62 @@
         </h2>
       </div>
 
-      <!-- Row 2: Open Source Card (col-span-1) -->
-      <div class="card col-span-1">
-        <p class="card__label">Open Source</p>
-        <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-2);"><%= @open_source["name"] %></h2>
-        <p class="text-body"><%= @open_source["description"] %></p>
-      </div>
+      <!-- Row 2: Open Source Card (col-span-1) - Rotating -->
+      <a
+        href="<%= @open_source_projects.first[:url] %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="col-span-1"
+        style="text-decoration: none; display: block; position: relative;"
+        data-controller="rotating-card"
+        data-rotating-card-projects-value="<%= @open_source_projects.to_json %>"
+        data-rotating-card-interval-value="7000"
+        data-action="mouseenter->rotating-card#pause mouseleave->rotating-card#resume"
+      >
+        <!-- Timer indicator -->
+        <div style="position: absolute; top: var(--space-4); right: var(--space-4); z-index: 10;">
+          <svg width="20" height="20" viewBox="0 0 20 20" style="transform: rotate(-90deg);">
+            <circle
+              cx="10"
+              cy="10"
+              r="8"
+              fill="none"
+              stroke="var(--border-medium)"
+              stroke-width="2"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="8"
+              fill="none"
+              stroke="var(--accent)"
+              stroke-width="2"
+              stroke-linecap="round"
+              data-rotating-card-target="progress"
+              style="transition: stroke-dashoffset 0.1s linear;"
+            />
+          </svg>
+        </div>
+
+        <div class="card" data-rotating-card-target="card" style="transition: opacity 0.3s ease, transform 0.3s ease; height: 100%;">
+          <p class="card__label">Open Source</p>
+          <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-2);" data-card-title><%= @open_source_projects.first[:name] %></h2>
+          <p class="text-body" data-card-description><%= @open_source_projects.first[:description] %></p>
+        </div>
+      </a>
     </div>
 
     <!-- Chat CTA Section -->
     <div style="margin-top: var(--space-16); text-align: center;">
-      <button
-        data-controller="chat-overlay"
-        data-action="click->chat-overlay#open"
-        class="btn btn--primary btn--lg"
-        style="gap: var(--space-3);"
-      >
+      <%= link_to new_chat_path,
+          data: { turbo_frame: 'overlay' },
+          class: "btn btn--primary btn--lg",
+          style: "gap: var(--space-3); display: inline-flex; align-items: center;" do %>
         <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
         </svg>
         Ask AI About Nathan
-      </button>
+      <% end %>
       <p class="text-caption" style="margin-top: var(--space-4);">
         Chat with an AI that knows Nathan's career story
       </p>
