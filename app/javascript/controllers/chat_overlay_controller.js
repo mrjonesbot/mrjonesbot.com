@@ -5,8 +5,8 @@ export default class extends Controller {
   static values = { question: String }
 
   open() {
-    this.overlayTarget.classList.remove("hidden")
-    document.body.classList.add("overflow-hidden")
+    this.overlayTarget.style.display = "flex"
+    document.body.style.overflow = "hidden"
 
     // Focus input after a short delay to ensure overlay is visible
     setTimeout(() => {
@@ -27,8 +27,8 @@ export default class extends Controller {
   }
 
   close() {
-    this.overlayTarget.classList.add("hidden")
-    document.body.classList.remove("overflow-hidden")
+    this.overlayTarget.style.display = "none"
+    document.body.style.overflow = ""
   }
 
   closeOnBackdrop(event) {

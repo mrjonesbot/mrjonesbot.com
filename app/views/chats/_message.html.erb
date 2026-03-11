@@ -4,14 +4,20 @@
 <% end %>
 
 <% if role != 'system' %>
-  <div class="flex <%= role == 'user' ? 'justify-end' : 'justify-start' %>">
-    <div class="<%= role == 'user' ? 'bg-blue-600' : 'bg-gray-800' %> text-white rounded-lg px-4 py-3 max-w-[80%]">
-      <% if role == 'user' %>
-        <p class="text-sm font-semibold mb-1">You</p>
-      <% else %>
-        <p class="text-sm font-semibold mb-1">AI</p>
-      <% end %>
-      <div class="prose prose-invert prose-sm max-w-none">
+  <div style="display: flex; <%= role == 'user' ? 'justify-content: flex-end;' : 'justify-content: flex-start;' %>">
+    <div
+      class="<%= role == 'user' ? 'card--accent' : 'card--subtle' %>"
+      style="
+        padding: var(--space-4);
+        border-radius: var(--radius-md);
+        max-width: 80%;
+        <%= role == 'user' ? 'color: white;' : '' %>
+      "
+    >
+      <p class="text-caption" style="margin-bottom: var(--space-2); <%= role == 'user' ? 'color: rgba(255,255,255,0.7);' : '' %>">
+        <%= role == 'user' ? 'You' : 'AI' %>
+      </p>
+      <div class="text-body" style="<%= role == 'user' ? 'color: white;' : '' %>">
         <%= simple_format(content) %>
       </div>
     </div>

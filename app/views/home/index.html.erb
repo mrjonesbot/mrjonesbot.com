@@ -1,125 +1,102 @@
-<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-  <!-- Hero Section -->
-  <div class="container mx-auto px-4 py-16 md:py-24">
-    <div class="max-w-4xl mx-auto text-center">
-      <h1 class="text-5xl md:text-7xl font-bold mb-4">
-        <%= @profile["name"] %>
-      </h1>
-      <p class="text-2xl md:text-3xl text-gray-300 mb-2">
-        <%= @profile["title"] %>
-      </p>
-      <p class="text-lg md:text-xl text-gray-400 mb-8">
-        <%= @profile["tagline"] %>
-      </p>
+<div style="min-height: 100vh; padding: var(--space-12) var(--space-6);">
+  <!-- Theme Toggle -->
+  <div style="position: fixed; top: var(--space-5); right: var(--space-5); z-index: 40;">
+    <button
+      data-action="click->theme#toggle"
+      data-theme-target="toggle"
+      class="btn btn--ghost"
+      style="width: 44px; height: 44px; padding: 0; border-radius: var(--radius-full);"
+      aria-label="Toggle theme"
+    >
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+    </button>
+  </div>
 
-      <!-- Ask AI Button -->
+  <!-- Bento Grid Container -->
+  <div style="max-width: 1400px; margin: 0 auto;">
+    <div class="bento-grid">
+      <!-- Row 1: Hero Card (col-span-2) -->
+      <div class="card col-span-2">
+        <p class="card__label">Full-Stack Engineer</p>
+        <h1 class="text-display" style="margin-bottom: var(--space-4);">Nathan B.</h1>
+        <p class="text-body">
+          Building Rails-backed SaaS products. Open source contributor. Writing about systems, APIs, and bootstrapping.
+        </p>
+      </div>
+
+      <!-- Row 1: Building Card (col-span-1, accent) -->
+      <div class="card card--accent col-span-1">
+        <p class="card__label">Building</p>
+        <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-2);"><%= @building[:name] %></h2>
+        <p style="color: rgba(255,255,255,0.8); font-size: var(--text-base);"><%= @building[:description] %></p>
+      </div>
+
+      <!-- Row 1: Location Card (col-span-1) -->
+      <div class="card col-span-1">
+        <p class="card__label">Location</p>
+        <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-4);"><%= @location %></h2>
+        <% if @open_to_work %>
+          <div class="status status--available">
+            <span class="status__dot"></span>
+            Open to work
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Row 2: Stack Card (col-span-2) -->
+      <div class="card col-span-2">
+        <p class="card__label">Stack</p>
+        <div class="flex flex-wrap gap-3" style="display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-4);">
+          <% @stack.each do |tech| %>
+            <% tag_class = case tech.downcase
+              when "rails" then "tag--rails"
+              when "postgresql" then "tag--postgres"
+              when "hotwire" then "tag--hotwire"
+              when "solid queue" then "tag--sidekiq"
+              when "stripe" then "tag--stripe"
+              when "fly.io" then "tag--accent"
+              when "claude code" then "tag--hotwire"
+              else "tag--neutral"
+              end %>
+            <span class="tag <%= tag_class %>" style="padding: 8px 16px; font-size: var(--text-base); font-weight: var(--weight-semibold);"><%= tech %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Row 2: Latest Post Card (col-span-1, custom green) -->
+      <div class="card col-span-1" style="background: linear-gradient(135deg, #1a4d2e 0%, #0d2818 100%); border-color: rgba(52, 217, 138, 0.2);">
+        <p class="card__label" style="color: rgba(52, 217, 138, 0.7);">Latest Post</p>
+        <h2 class="card__title" style="color: white; margin-top: var(--space-3);">
+          <%= @latest_post[:title] %>
+        </h2>
+      </div>
+
+      <!-- Row 2: Open Source Card (col-span-1) -->
+      <div class="card col-span-1">
+        <p class="card__label">Open Source</p>
+        <h2 class="card__title" style="font-size: var(--text-2xl); margin-bottom: var(--space-2);"><%= @open_source["name"] %></h2>
+        <p class="text-body"><%= @open_source["description"] %></p>
+      </div>
+    </div>
+
+    <!-- Chat CTA Section -->
+    <div style="margin-top: var(--space-16); text-align: center;">
       <button
         data-controller="chat-overlay"
         data-action="click->chat-overlay#open"
-        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+        class="btn btn--primary btn--lg"
+        style="gap: var(--space-3);"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
         </svg>
         Ask AI About Nathan
       </button>
-
-      <p class="mt-4 text-sm text-gray-500">
+      <p class="text-caption" style="margin-top: var(--space-4);">
         Chat with an AI that knows Nathan's career story
       </p>
-    </div>
-  </div>
-
-  <!-- Suggested Questions -->
-  <div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-6 text-center">Common Questions</h2>
-      <div class="grid md:grid-cols-2 gap-4">
-        <% [
-          "What kind of leadership experience do they have?",
-          "Tell me about their biggest failure.",
-          "How did they reduce costs by $1.2M? Was it technical or political?",
-          "Would this person be good for a Series B startup with messy data infrastructure?"
-        ].each do |question| %>
-          <button
-            data-controller="chat-overlay"
-            data-action="click->chat-overlay#openWithQuestion"
-            data-chat-overlay-question-value="<%= question %>"
-            class="text-left p-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors border border-gray-700 hover:border-gray-600"
-          >
-            <p class="text-gray-300"><%= question %></p>
-          </button>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <!-- Experience Timeline -->
-  <div class="container mx-auto px-4 py-16">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-12 text-center">Experience</h2>
-
-      <div class="space-y-8">
-        <% @experiences.each_with_index do |experience, index| %>
-          <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <div class="flex justify-between items-start mb-4">
-              <div>
-                <h3 class="text-2xl font-bold"><%= experience["company"] %></h3>
-                <p class="text-lg text-gray-300"><%= experience["role"] %></p>
-              </div>
-              <p class="text-gray-400"><%= experience["period"] %></p>
-            </div>
-
-            <ul class="list-disc list-inside space-y-2 mb-4">
-              <% experience["highlights"].each do |highlight| %>
-                <li class="text-gray-300"><%= highlight %></li>
-              <% end %>
-            </ul>
-
-            <details class="mt-4">
-              <summary class="cursor-pointer text-blue-400 hover:text-blue-300 font-medium">
-                View AI Context &rarr;
-              </summary>
-              <div class="mt-4 p-4 bg-gray-900 rounded border border-gray-700">
-                <p class="text-gray-300 whitespace-pre-line"><%= experience["ai_context"] %></p>
-              </div>
-            </details>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <!-- Values -->
-  <div class="container mx-auto px-4 py-16">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-8 text-center">Core Values</h2>
-      <div class="grid md:grid-cols-2 gap-4">
-        <% @values.each do |value| %>
-          <div class="bg-gray-800 rounded-lg p-4 border border-gray-700">
-            <p class="text-gray-300"><%= value %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <!-- Projects -->
-  <div class="container mx-auto px-4 py-16 pb-24">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold mb-8 text-center">Notable Projects</h2>
-      <div class="space-y-4">
-        <% @projects.each do |project| %>
-          <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="text-xl font-bold"><%= project["name"] %></h3>
-              <p class="text-gray-400 text-sm"><%= project["date"] %></p>
-            </div>
-            <p class="text-gray-300 mb-2"><%= project["description"] %></p>
-            <p class="text-gray-400 text-sm"><%= project["details"] %></p>
-          </div>
-        <% end %>
-      </div>
     </div>
   </div>
 </div>
