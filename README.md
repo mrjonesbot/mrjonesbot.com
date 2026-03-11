@@ -1,24 +1,31 @@
-# README
+# mrjonesbot.com
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Personal website for Nathan Jones — developer and founder.
 
-Things you may want to cover:
+The site features an **interactive AI chat** powered by Claude that can answer in-depth questions about my career, experience, technical expertise, and working style. Think of it as a conversational resume — recruiters, hiring managers, or anyone curious can ask questions and get detailed, contextual answers in real time.
 
-* Ruby version
+## AI Chat
 
-* System dependencies
+The chat is backed by Anthropic's Claude API via the [ruby_llm](https://github.com/crmne/ruby_llm) gem. A career context file (`config/career_context.yml`) provides Claude with detailed knowledge about my background, and responses stream back to the browser in real time via Turbo Streams.
 
-* Configuration
+- Session-based conversation history
+- Suggested questions to get started
+- Rate limited to prevent abuse
 
-* Database creation
+## Tech Stack
 
-* Database initialization
+- Ruby on Rails 8
+- SQLite3
+- Hotwire (Turbo + Stimulus)
+- Tailwind CSS
+- Docker + Fly.io for deployment
 
-* How to run the test suite
+## Setup
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+bundle install
+bin/rails db:setup
+bin/dev
+```
 
-* Deployment instructions
-
-* ...
+Requires an `ANTHROPIC_API_KEY` environment variable for the AI chat feature.
