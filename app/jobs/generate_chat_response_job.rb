@@ -18,15 +18,28 @@ class GenerateChatResponseJob < ApplicationJob
       # Reload chat to get updated messages
       chat.reload
 
-      Turbo::StreamsChannel.broadcast_replace_to(
+      # Remove the "AI is thinking..." indicator
+      Turbo::StreamsChannel.broadcast_remove_to(
+        "chat_#{chat_id}",
+        target: "ai_thinking"
+      )
+
+      # Append the AI response
+      Turbo::StreamsChannel.broadcast_append_to(
         "chat_#{chat_id}",
         target: "messages",
-        partial: "chats/messages",
-        locals: { chat: chat }
+        partial: "chats/message",
+        locals: { role: "assistant", content: chat.messages.last.content }
       )
     rescue => e
       Rails.logger.error "Error generating chat response: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
+
+      # Remove the "AI is thinking..." indicator
+      Turbo::StreamsChannel.broadcast_remove_to(
+        "chat_#{chat_id}",
+        target: "ai_thinking"
+      )
 
       # Broadcast error message
       error_message = if e.message.include?("ANTHROPIC_API_KEY")
