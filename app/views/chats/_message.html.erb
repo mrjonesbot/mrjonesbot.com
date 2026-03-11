@@ -1,0 +1,19 @@
+<% if defined?(message) && message.is_a?(Message) %>
+  <% role = message.role %>
+  <% content = message.content %>
+<% end %>
+
+<% if role != 'system' %>
+  <div class="flex <%= role == 'user' ? 'justify-end' : 'justify-start' %>">
+    <div class="<%= role == 'user' ? 'bg-blue-600' : 'bg-gray-800' %> text-white rounded-lg px-4 py-3 max-w-[80%]">
+      <% if role == 'user' %>
+        <p class="text-sm font-semibold mb-1">You</p>
+      <% else %>
+        <p class="text-sm font-semibold mb-1">AI</p>
+      <% end %>
+      <div class="prose prose-invert prose-sm max-w-none">
+        <%= simple_format(content) %>
+      </div>
+    </div>
+  </div>
+<% end %>
