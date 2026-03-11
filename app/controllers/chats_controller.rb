@@ -25,20 +25,34 @@ class ChatsController < ApplicationController
     @chat = find_or_create_chat
     user_message = params[:message]
 
+    # Check if this is the first message (hide empty state)
+    is_first_message = @chat.messages.count == 0
+
     # Add user message to the conversation
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.append(
-            "messages",
-            partial: "chats/message",
-            locals: { role: "user", content: user_message }
-          ),
-          turbo_stream.append(
-            "messages",
-            "<div id='ai_thinking' class='text-gray-400 text-sm'>AI is thinking...</div>"
-          )
-        ]
+        streams = []
+
+        # Hide empty state and suggested questions on first message
+        if is_first_message
+          streams << turbo_stream.remove("chat_empty_state")
+          streams << turbo_stream.remove("suggested_questions")
+        end
+
+        # Append user message
+        streams << turbo_stream.append(
+          "messages",
+          partial: "chats/message",
+          locals: { role: "user", content: user_message }
+        )
+
+        # Show AI thinking indicator
+        streams << turbo_stream.append(
+          "messages",
+          "<div id='ai_thinking' class='text-gray-400 text-sm'>AI is thinking...</div>"
+        )
+
+        render turbo_stream: streams
       end
     end
 

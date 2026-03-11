@@ -17,13 +17,13 @@
            id="chat_messages"
            style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6);">
         <div id="messages">
-          <div style="text-align: center; padding: var(--space-8) 0; color: var(--text-tertiary);">
+          <div id="chat_empty_state" style="text-align: center; padding: var(--space-8) 0; color: var(--text-tertiary);">
             <p class="text-body" style="margin-bottom: var(--space-2);">👋 Hi! I'm an AI that knows Nathan's career story.</p>
             <p class="text-body">Ask me anything about his experience, achievements, or working style.</p>
           </div>
 
           <!-- Suggested Questions -->
-          <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6);">
+          <div id="suggested_questions" style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6);">
             <% [
               "What's Nathan's experience with Rails and Hotwire?",
               "Tell me about Nathan's approach to building SaaS products",
