@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def index
     @profile = career_context["profile"]
-    @stack = ["Rails", "PostgreSQL", "Hotwire", "Solid Queue", "Stripe", "Fly.io", "Claude Code"]
+    @stack = ["Rails", "PostgreSQL", "Hotwire", "Solid Queue", "Stripe", "Docker", "Grafana", "Fly.io", "Claude Code"]
     @location = "Chicago, IL"
     @open_to_work = true
 
