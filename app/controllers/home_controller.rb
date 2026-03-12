@@ -14,9 +14,9 @@ class HomeController < ApplicationController
     ]
 
     @open_source_projects = [
-      { name: "Sage", description: "Natural language reporting Rails engine built on Blazer gem", url: "https://github.com/mrjonesbot/sage" },
-      { name: "Snitch", description: "GitHub Actions monitoring for Rails", url: "https://github.com/mrjonesbot/snitch" },
-      { name: "Highlite", description: "Code highlighting gem", url: "https://github.com/mrjonesbot/highlite" },
+      { name: "Sage", description: "Natural language reporting for Rails", url: "https://github.com/mrjonesbot/sage" },
+      { name: "Snitch", description: "Production exception monitoring for Rails", url: "https://github.com/mrjonesbot/snitch" },
+      { name: "Highlite", description: "PDF highlighting", url: "https://github.com/mrjonesbot/highlite" },
       { name: "Bureau", description: "Coming soon", url: "#" },
       { name: "Invoiceflow", description: "Coming soon", url: "#" }
     ]
