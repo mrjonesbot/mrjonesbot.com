@@ -42,7 +42,7 @@ class GenerateFitCheckJob < ApplicationJob
     experiences = context["experiences"]
     expertise = context["technical_expertise"]
     self_assessment = context["self_assessment"]
-    compensation = context["compensation"]
+    work_prefs = context["work_preferences"]
     values = context["values"]
 
     experience_text = experiences.map { |e|
@@ -65,9 +65,11 @@ class GenerateFitCheckJob < ApplicationJob
 
       Values: #{values.join('; ')}
 
-      Target compensation: #{compensation['target_salary']}
+      Work preferences: #{work_prefs['location']}
+      Target compensation: #{work_prefs['target_salary']}
 
       Your task: Given a job description, provide a brutally honest assessment of Nathan's fit.
+      If the role requires on-site work outside Chicago, flag it as a mismatch.
       If the job description lists a salary range, note whether it aligns with Nathan's target compensation.
       Be real — don't oversell. If it's not a fit, say so clearly.
 
