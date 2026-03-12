@@ -14,6 +14,11 @@ export default class extends Controller {
     this.submitTextTarget.textContent = "Analyzing..."
   }
 
+  resultTargetConnected() {
+    this.submitTarget.disabled = false
+    this.submitTextTarget.textContent = "Check Fit"
+  }
+
   export() {
     const resultEl = this.resultTarget.querySelector(".markdown-content")
     if (!resultEl) return
