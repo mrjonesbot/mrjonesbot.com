@@ -74,7 +74,7 @@ projects:
     description: Open source Rails engine for production exception monitoring
     details: Accelerates time-to-patch for production exceptions by surfacing actionable error context directly in your workflow
   - name: Highlite
-    description: Code highlighting gem
+    description: PDF highlighting gem
 
 technical_expertise:
   - Ruby on Rails (8+ years)

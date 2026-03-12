@@ -10,7 +10,7 @@ class HomeController < ApplicationController
     @building_projects = [
       { name: "NestingBird", description: "HOA SaaS", url: "https://nestingbird.co" },
       { name: "RiseKit", description: "Workforce development platform", url: "https://risekit.co" },
-      { name: "Product Heist", description: "Product discovery community", url: "https://productheist.com" }
+      { name: "Product Heist", description: "Product specification software for interior designers", url: "https://productheist.com" }
     ]
 
     @open_source_projects = [
