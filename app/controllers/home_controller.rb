@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     @open_to_work = true
 
     @building_projects = [
-      { name: "NestingBird", description: "HOA SaaS", url: "https://nestingbird.co" },
+      { name: "NestingBird", description: "HOA management for self-managed buildings and property managers", url: "https://nestingbird.co" },
       { name: "RiseKit", description: "Workforce development platform", url: "https://risekit.co" },
       { name: "Product Heist", description: "Product specification software for interior designers", url: "https://productheist.com" }
     ]
