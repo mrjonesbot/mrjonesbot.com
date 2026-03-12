@@ -71,7 +71,8 @@ projects:
     date: September 2025
     details: LLM interface for data exploration, allowing non-technical users to query databases using natural language
   - name: Snitch
-    description: GitHub Actions monitoring for Rails
+    description: Open source Rails engine for production exception monitoring
+    details: Accelerates time-to-patch for production exceptions by surfacing actionable error context directly in your workflow
   - name: Highlite
     description: Code highlighting gem
 
@@ -83,6 +84,7 @@ technical_expertise:
   - Developer tools and CLI applications
   - LLM integration and AI-powered tools
   - Docker and deployment (Fly.io)
+  - Observability (Grafana, AppSignal, BetterStack)
 
 values:
   - Player-coach leadership style - still writing code while helping others grow
