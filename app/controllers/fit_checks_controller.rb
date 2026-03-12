@@ -1,6 +1,6 @@
 class FitChecksController < ApplicationController
   skip_before_action :protect_from_spam, raise: false
-  before_action :check_rate_limit, only: [:create]
+  before_action :check_rate_limit, only: [:create], unless: -> { Rails.env.development? }
 
   def new
     # Renders the fit check overlay via Turbo Frame
