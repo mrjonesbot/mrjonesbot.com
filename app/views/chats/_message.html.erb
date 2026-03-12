@@ -17,8 +17,8 @@
       <p class="text-caption" style="margin-bottom: var(--space-2); <%= role == 'user' ? 'color: rgba(255,255,255,0.7);' : '' %>; text-transform: uppercase; font-weight: var(--weight-semibold); letter-spacing: 0.05em;">
         <%= role == 'user' ? 'You' : 'AI' %>
       </p>
-      <div class="text-body" style="<%= role == 'user' ? 'color: white;' : '' %>">
-        <%= simple_format(content) %>
+      <div class="text-body markdown-content" style="<%= role == 'user' ? 'color: white;' : '' %>">
+        <%= role == 'user' ? simple_format(content) : markdown(content) %>
       </div>
     </div>
   </div>

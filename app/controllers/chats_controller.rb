@@ -25,19 +25,14 @@ class ChatsController < ApplicationController
     @chat = find_or_create_chat
     user_message = params[:message]
 
-    # Check if this is the first message (hide empty state)
-    is_first_message = @chat.messages.count == 0
-
     # Add user message to the conversation
     respond_to do |format|
       format.turbo_stream do
         streams = []
 
-        # Hide empty state and suggested questions on first message
-        if is_first_message
-          streams << turbo_stream.remove("chat_empty_state")
-          streams << turbo_stream.remove("suggested_questions")
-        end
+        # Always attempt to hide empty state and suggested questions
+        streams << turbo_stream.remove("chat_empty_state")
+        streams << turbo_stream.remove("suggested_questions")
 
         # Append user message
         streams << turbo_stream.append(
