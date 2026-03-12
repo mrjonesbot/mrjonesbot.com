@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   # Overlay close action
   get '/close_overlay', to: 'actions#close_overlay', as: :close_overlay
 
+  # Fit Check
+  resource :fit_check, only: [:new, :create]
+
   # Chat routes
   resources :chats, only: [:create, :new] do
     member do

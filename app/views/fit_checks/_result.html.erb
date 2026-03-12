@@ -1,0 +1,26 @@
+<%
+  colors = case fit_level
+  when "strong"
+    { bg: "rgba(34, 197, 94, 0.1)", border: "rgba(34, 197, 94, 0.3)", accent: "#22c55e" }
+  when "moderate"
+    { bg: "rgba(234, 179, 8, 0.1)", border: "rgba(234, 179, 8, 0.3)", accent: "#eab308" }
+  when "weak"
+    { bg: "rgba(249, 115, 22, 0.1)", border: "rgba(249, 115, 22, 0.3)", accent: "#f97316" }
+  when "not_a_fit"
+    { bg: "rgba(239, 68, 68, 0.1)", border: "rgba(239, 68, 68, 0.3)", accent: "#ef4444" }
+  else
+    { bg: "rgba(234, 179, 8, 0.1)", border: "rgba(234, 179, 8, 0.3)", accent: "#eab308" }
+  end
+%>
+
+<div id="fit_check_result"
+     style="
+       padding: var(--space-5);
+       border-radius: var(--radius-md);
+       border: 1px solid <%= colors[:border] %>;
+       background: <%= colors[:bg] %>;
+     ">
+  <div class="text-body" style="line-height: 1.7;">
+    <%= simple_format(content) %>
+  </div>
+</div>

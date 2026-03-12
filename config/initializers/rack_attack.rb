@@ -14,6 +14,13 @@ class Rack::Attack
     end
   end
 
+  # Throttle fit check requests by IP (5 req/5 min)
+  throttle('fit_check/ip', limit: 5, period: 5.minutes) do |req|
+    if req.path == '/fit_check' && req.post?
+      req.ip
+    end
+  end
+
   # Block IPs that make too many requests across the entire site
   throttle('req/ip', limit: 300, period: 5.minutes) do |req|
     req.ip

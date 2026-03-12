@@ -1,0 +1,20 @@
+<div id="fit_check_result">
+  <%= turbo_stream_from "fit_check_#{assessment_token}" %>
+  <div style="text-align: center; padding: var(--space-8) 0; color: var(--text-tertiary);">
+    <div style="display: inline-flex; gap: var(--space-2); align-items: center;">
+      <span class="thinking-dots" style="font-size: var(--text-2xl); letter-spacing: 0.3em;">...</span>
+    </div>
+    <p class="text-body" style="margin-top: var(--space-3);">Analyzing job description against Nathan's experience</p>
+  </div>
+</div>
+
+<style>
+  .thinking-dots {
+    animation: thinking 1.4s infinite;
+  }
+  @keyframes thinking {
+    0%, 20% { opacity: 0.2; }
+    50% { opacity: 1; }
+    80%, 100% { opacity: 0.2; }
+  }
+</style>
