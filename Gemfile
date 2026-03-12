@@ -104,6 +104,7 @@ gem "sage-rails", require: "sage"
 gem "snitch-rails", require: "snitch"
 gem "lexxy"
 gem "ruby_llm"
+gem "redcarpet"
 
 group :development do
   gem "letter_opener"

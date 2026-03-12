@@ -15,12 +15,13 @@
 
 <div id="fit_check_result"
      style="
+       margin-top: var(--space-6);
        padding: var(--space-5);
        border-radius: var(--radius-md);
        border: 1px solid <%= colors[:border] %>;
        background: <%= colors[:bg] %>;
      ">
-  <div class="text-body" style="line-height: 1.7;">
-    <%= simple_format(content) %>
+  <div class="text-body markdown-content" style="line-height: 1.7;">
+    <%= markdown(content) %>
   </div>
 </div>
