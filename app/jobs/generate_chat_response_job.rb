@@ -6,7 +6,7 @@ class GenerateChatResponseJob < ApplicationJob
 
     begin
       # Check if API key is configured
-      unless ENV["ANTHROPIC_API_KEY"] || Rails.application.credentials.dig(:anthropic_api_key)
+      unless ENV["ANTHROPIC_API_KEY"] || Rails.application.credentials.dig(:anthropic, :api_key)
         raise "ANTHROPIC_API_KEY is not configured. Please set it in ENV or Rails credentials."
       end
 
