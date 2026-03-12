@@ -14,6 +14,7 @@
 %>
 
 <div id="fit_check_result"
+     data-fit-check-target="result"
      style="
        margin-top: var(--space-6);
        padding: var(--space-5);
@@ -23,5 +24,15 @@
      ">
   <div class="text-body markdown-content" style="line-height: 1.7;">
     <%= markdown(content) %>
+  </div>
+  <div style="margin-top: var(--space-4); text-align: right;">
+    <button data-action="click->fit-check#export"
+            class="btn btn--ghost"
+            style="display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); font-size: var(--text-sm);">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      Export
+    </button>
   </div>
 </div>
