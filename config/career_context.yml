@@ -112,7 +112,7 @@ self_assessment:
     - Refactoring & pivoting a product
   moderate:
     - Data Engineering
-    - Security & Compliance
+    - DevOps & Infrastructure (comfortable with Docker, Fly.io, observability — not deep Kubernetes or multi-region infra)
     - Team Building
   gaps:
     - Consumer Product
