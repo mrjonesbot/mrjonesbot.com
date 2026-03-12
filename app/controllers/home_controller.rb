@@ -21,7 +21,11 @@ class HomeController < ApplicationController
       { name: "Invoiceflow", description: "Coming soon", url: "#" }
     ]
 
-    @latest_post = { title: "Why HOA boards need software, not spreadsheets", url: "#" }
+    @also_roles = [
+      { name: "Associate Faculty", description: "Northwestern Kellogg", url: "https://www.kellogg.northwestern.edu/" },
+      { name: "Sr. Engineer & Team Lead", description: "Yello.co", url: "https://yello.co" },
+      { name: "Software Developer", description: "LaunchPad Lab", url: "https://launchpadlab.com/" }
+    ]
   end
 
   private

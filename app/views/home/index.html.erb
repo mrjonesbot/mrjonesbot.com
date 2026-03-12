@@ -104,13 +104,49 @@
         </div>
       </div>
 
-      <!-- Row 2: Latest Post Card (col-span-1, custom green) -->
-      <div class="card col-span-1" style="background: linear-gradient(135deg, #1a4d2e 0%, #0d2818 100%); border-color: rgba(52, 217, 138, 0.2);">
-        <p class="card__label" style="color: rgba(52, 217, 138, 0.7);">Latest Post</p>
-        <h2 class="card__title" style="color: white; margin-top: var(--space-3);">
-          <%= @latest_post[:title] %>
-        </h2>
-      </div>
+      <!-- Row 2: Also Card (col-span-1, custom green) - Rotating -->
+      <a
+        href="<%= @also_roles.first[:url] %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="col-span-1"
+        style="text-decoration: none; display: block; position: relative;"
+        data-controller="rotating-card"
+        data-rotating-card-projects-value="<%= @also_roles.to_json %>"
+        data-rotating-card-interval-value="5000"
+        data-action="mouseenter->rotating-card#pause mouseleave->rotating-card#resume"
+      >
+        <!-- Timer indicator -->
+        <div style="position: absolute; top: var(--space-4); right: var(--space-4); z-index: 10;">
+          <svg width="20" height="20" viewBox="0 0 20 20" style="transform: rotate(-90deg);">
+            <circle
+              cx="10"
+              cy="10"
+              r="8"
+              fill="none"
+              stroke="rgba(52, 217, 138, 0.2)"
+              stroke-width="2"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="8"
+              fill="none"
+              stroke="rgba(52, 217, 138, 0.8)"
+              stroke-width="2"
+              stroke-linecap="round"
+              data-rotating-card-target="progress"
+              style="transition: stroke-dashoffset 0.1s linear;"
+            />
+          </svg>
+        </div>
+
+        <div class="card" data-rotating-card-target="card" style="background: linear-gradient(135deg, #1a4d2e 0%, #0d2818 100%); border-color: rgba(52, 217, 138, 0.2); transition: opacity 0.3s ease, transform 0.3s ease; height: 100%;">
+          <p class="card__label" style="color: rgba(52, 217, 138, 0.7);">Also</p>
+          <h2 class="card__title" style="color: white; font-size: var(--text-2xl); margin-bottom: var(--space-2);" data-card-title><%= @also_roles.first[:name] %></h2>
+          <p style="color: rgba(255,255,255,0.8); font-size: var(--text-base);" data-card-description><%= @also_roles.first[:description] %></p>
+        </div>
+      </a>
 
       <!-- Row 2: Open Source Card (col-span-1) - Rotating -->
       <a
