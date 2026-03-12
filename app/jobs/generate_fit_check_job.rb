@@ -96,15 +96,16 @@ class GenerateFitCheckJob < ApplicationJob
   end
 
   def extract_fit_level(content)
-    first_line = content.to_s.lines.first.to_s.downcase
-    if first_line.include?("strong fit")
+    # Scan for the "Overall Fit:" line anywhere in the response
+    fit_line = content.to_s.lines.find { |l| l.downcase.include?("overall fit") }.to_s.downcase
+    if fit_line.include?("strong fit")
       "strong"
-    elsif first_line.include?("moderate fit")
-      "moderate"
-    elsif first_line.include?("not a fit")
+    elsif fit_line.include?("not a fit")
       "not_a_fit"
-    elsif first_line.include?("weak fit")
+    elsif fit_line.include?("weak fit")
       "weak"
+    elsif fit_line.include?("moderate fit")
+      "moderate"
     else
       "moderate"
     end
