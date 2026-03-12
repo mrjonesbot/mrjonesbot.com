@@ -96,6 +96,9 @@ approach:
   - "I value small, incremental changes over large refactors"
   - "I'm comfortable with ambiguity and making decisions with incomplete information"
 
+compensation:
+  target_salary: "$160,000 - $180,000 per year"
+
 self_assessment:
   strong:
     - Full-stack Rails
