@@ -109,10 +109,6 @@ class ChatsController < ApplicationController
     output
   end
 
-  def career_context
-    @career_context ||= YAML.load_file(Rails.root.join("config/career_context.yml"))
-  end
-
   def check_rate_limit
     # Rate limit: 10 messages per minute per IP
     cache_key = "chat_rate_limit:#{request.remote_ip}"

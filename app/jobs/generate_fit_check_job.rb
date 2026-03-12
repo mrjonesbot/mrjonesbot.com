@@ -2,7 +2,7 @@ class GenerateFitCheckJob < ApplicationJob
   queue_as :default
 
   def perform(assessment_token, job_description)
-    career_context = YAML.load_file(Rails.root.join("config/career_context.yml"))
+    career_context = Rails.application.credentials.dig(:site, :career_context).deep_stringify_keys
 
     system_prompt = build_system_prompt(career_context)
 
