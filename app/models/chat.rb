@@ -1,7 +1,7 @@
 class Chat < ApplicationRecord
-  acts_as_chat
+  has_many :messages, dependent: :destroy
 
-  def system_message
+  def system_prompt
     career_context = YAML.load_file(Rails.root.join("config/career_context.yml"))
 
     <<~PROMPT

@@ -2,57 +2,53 @@ class GenerateChatResponseJob < ApplicationJob
   queue_as :default
 
   def perform(chat_id, user_message)
-    chat = Chat.find(chat_id)
+    chat_record = Chat.find(chat_id)
 
     begin
-      # Check if API key is configured
-      unless ENV["ANTHROPIC_API_KEY"] || Rails.application.credentials.dig(:anthropic, :api_key)
-        raise "ANTHROPIC_API_KEY is not configured. Please set it in ENV or Rails credentials."
+      # Save user message
+      chat_record.messages.create!(role: "user", content: user_message)
+
+      # Build RubyLLM chat with system prompt
+      llm_chat = RubyLLM.chat
+      llm_chat.with_instructions(chat_record.system_prompt)
+
+      # Replay prior messages for conversation context (excluding the latest user message)
+      prior_messages = chat_record.messages.order(:created_at).to_a
+      prior_messages[0..-2].each do |msg|
+        llm_chat.add_message(role: msg.role.to_sym, content: msg.content)
       end
 
-      # Ask the chat with the user message
-      # The chat will automatically use the system_message method if it's the first message
-      response = chat.ask(user_message)
+      # Ask with the latest user message (this triggers the API call)
+      response = llm_chat.ask(user_message)
 
-      # Broadcast the response via Turbo Stream
-      # Reload chat to get updated messages
-      chat.reload
+      # Save assistant message
+      chat_record.messages.create!(role: "assistant", content: response.content)
 
-      # Remove the "AI is thinking..." indicator
       Turbo::StreamsChannel.broadcast_remove_to(
         "chat_#{chat_id}",
         target: "ai_thinking"
       )
 
-      # Append the AI response
       Turbo::StreamsChannel.broadcast_append_to(
         "chat_#{chat_id}",
         target: "messages",
         partial: "chats/message",
-        locals: { role: "assistant", content: chat.messages.last.content }
+        locals: { role: "assistant", content: response.content }
       )
     rescue => e
       Rails.logger.error "Error generating chat response: #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
 
-      # Remove the "AI is thinking..." indicator
       Turbo::StreamsChannel.broadcast_remove_to(
         "chat_#{chat_id}",
         target: "ai_thinking"
       )
 
-      # Broadcast error message
-      error_message = if e.message.include?("ANTHROPIC_API_KEY")
-        "⚠️ API key not configured. Please set ANTHROPIC_API_KEY environment variable."
-      else
-        "Sorry, I encountered an error. Please try again."
-      end
-
       Turbo::StreamsChannel.broadcast_append_to(
         "chat_#{chat_id}",
         target: "messages",
         partial: "chats/message",
-        locals: { role: "assistant", content: error_message }
+        locals: { role: "assistant", content: "Sorry, I encountered an error. Please try again." }
       )
     end
   end
