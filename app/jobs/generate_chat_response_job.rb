@@ -9,7 +9,7 @@ class GenerateChatResponseJob < ApplicationJob
       chat_record.messages.create!(role: "user", content: user_message)
 
       # Build RubyLLM chat with system prompt
-      llm_chat = RubyLLM.chat
+      llm_chat = RubyLLM.chat(model: "claude-haiku-4-5-20251001")
       llm_chat.with_instructions(chat_record.system_prompt)
 
       # Replay prior messages for conversation context (excluding the latest user message)
