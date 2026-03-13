@@ -97,8 +97,15 @@ export default class extends Controller {
       if (descElement) descElement.textContent = nextProject.description
       if (linkElement) {
         const hasUrl = nextProject.url && nextProject.url !== "#"
-        linkElement.href = hasUrl ? nextProject.url : "javascript:void(0)"
-        linkElement.style.cursor = hasUrl ? "pointer" : "default"
+        if (hasUrl) {
+          linkElement.href = nextProject.url
+          linkElement.setAttribute("target", "_blank")
+          linkElement.style.cursor = "pointer"
+        } else {
+          linkElement.removeAttribute("href")
+          linkElement.removeAttribute("target")
+          linkElement.style.cursor = "default"
+        }
       }
 
       // Reset position and fade in
