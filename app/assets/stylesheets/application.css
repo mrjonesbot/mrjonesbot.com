@@ -460,6 +460,57 @@ body {
 
 
 /* ------------------------------------------------------------
+   SKILLS GRID
+   ------------------------------------------------------------ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gap);
+  width: 100%;
+}
+
+.skills-grid .card:hover {
+  transform: none;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.skills-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  line-height: var(--leading-normal);
+}
+
+.skills-icon {
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ------------------------------------------------------------
    BUTTONS
    ------------------------------------------------------------ */
 .btn {
