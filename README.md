@@ -6,7 +6,7 @@ The site features an **interactive AI chat** powered by Claude that can answer i
 
 ## AI Chat
 
-The chat is backed by Anthropic's Claude API via the [ruby_llm](https://github.com/crmne/ruby_llm) gem. A career context file (`config/career_context.yml`) provides Claude with detailed knowledge about my background, and responses stream back to the browser in real time via Turbo Streams.
+The chat is backed by Anthropic's Claude API via the [ruby_llm](https://github.com/crmne/ruby_llm) gem. Career context is stored in Rails credentials, so the project is fully clonable without extra config files. Responses stream back to the browser in real time via Turbo Streams.
 
 - Session-based conversation history
 - Suggested questions to get started
