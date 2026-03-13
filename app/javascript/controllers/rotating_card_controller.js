@@ -95,7 +95,11 @@ export default class extends Controller {
 
       if (titleElement) titleElement.textContent = nextProject.name
       if (descElement) descElement.textContent = nextProject.description
-      if (linkElement) linkElement.href = nextProject.url
+      if (linkElement) {
+        const hasUrl = nextProject.url && nextProject.url !== "#"
+        linkElement.href = hasUrl ? nextProject.url : "javascript:void(0)"
+        linkElement.style.cursor = hasUrl ? "pointer" : "default"
+      }
 
       // Reset position and fade in
       currentCard.style.transform = "translateY(10px)"
