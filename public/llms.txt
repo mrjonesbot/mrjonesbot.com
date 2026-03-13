@@ -1,0 +1,19 @@
+# Nathan Jones
+
+> Software engineering leader, founder, and educator based in Chicago, IL. Founder of NestingBird, Associate Faculty at Northwestern Kellogg.
+
+## About
+- [Homepage](https://mrjonesbot.com): Personal portfolio with AI chat and fit check tools
+
+## Projects
+- [NestingBird](https://nestingbird.co): HOA management for self-managed buildings and property managers
+- [RiseKit](https://risekit.co): Workforce development platform
+- [Product Heist](https://productheist.com): Product specification software for interior designers
+
+## Open Source
+- [Sage](https://github.com/mrjonesbot/sage): Natural language reporting for Rails
+- [Snitch](https://github.com/mrjonesbot/snitch): Production exception monitoring for Rails
+- [Highlite](https://github.com/mrjonesbot/highlite): PDF highlighting
+
+## Profiles
+- [GitHub](https://github.com/mrjonesbot): Open source projects and contributions

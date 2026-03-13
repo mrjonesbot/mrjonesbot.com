@@ -16,6 +16,7 @@
     <meta name="twitter:title" content="Nathan Jones | Product Builder">
     <meta name="twitter:description" content="Software engineering leader, founder, and educator">
     <meta name="twitter:image" content="<%= request.base_url %>/og-image.png">
+    <link rel="canonical" href="<%= request.original_url %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
@@ -37,6 +38,7 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= json_ld_tags %>
   </head>
 
   <body data-controller="theme">
