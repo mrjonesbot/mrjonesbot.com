@@ -5,11 +5,39 @@ export default class extends Controller {
 
   connect() {
     this.scrollToBottomIfNeeded()
+    this.observeMessages()
+  }
+
+  disconnect() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  observeMessages() {
+    if (!this.hasMessagesTarget) return
+
+    this.observer = new MutationObserver(() => {
+      if (this.isNearBottom()) {
+        this.scrollToBottom()
+      }
+    })
+
+    this.observer.observe(this.messagesTarget, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    })
+  }
+
+  isNearBottom() {
+    if (!this.hasMessagesTarget) return true
+    const { scrollTop, scrollHeight, clientHeight } = this.messagesTarget
+    return (scrollHeight - scrollTop - clientHeight) < 150
   }
 
   scrollToBottomIfNeeded() {
     if (this.hasMessagesTarget) {
-      // Only scroll to bottom when there are actual chat messages (not just the empty state)
       const isEmptyState = this.messagesTarget.querySelector('#chat_empty_state')
       if (!isEmptyState) {
         this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight

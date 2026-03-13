@@ -801,6 +801,20 @@ body {
 }
 
 
+/* --- Streaming chat cursor --- */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+#streaming_content::after {
+  content: '\25CB';
+  display: inline;
+  animation: blink-cursor 0.8s step-end infinite;
+  color: var(--accent-text);
+  margin-left: 2px;
+}
+
 /* --- Overlay mobile padding --- */
 @media (max-width: 640px) {
   .overlay-header { padding: var(--space-3) !important; }
