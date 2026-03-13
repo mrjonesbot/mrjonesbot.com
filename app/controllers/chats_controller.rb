@@ -3,12 +3,13 @@ class ChatsController < ApplicationController
   before_action :check_rate_limit, only: [:ask]
 
   def new
-    # Renders the chat overlay via Turbo Frame
+    chat_id = cookies.signed[:chat_id]
+    @chat = Chat.find_by(id: chat_id) if chat_id
   end
 
   def create
     @chat = Chat.create!(session_token: ensure_session_token)
-    session[:chat_id] = @chat.id
+    store_chat_id(@chat.id)
 
     respond_to do |format|
       format.turbo_stream do
@@ -68,31 +69,34 @@ class ChatsController < ApplicationController
   private
 
   def find_or_create_chat
-    # First try to find by session chat_id
-    chat_id = params[:id] == "new" ? session[:chat_id] : params[:id]
+    chat_id = params[:id] == "new" ? cookies.signed[:chat_id] : params[:id]
 
     if chat_id
       chat = Chat.find_by(id: chat_id)
       return chat if chat
     end
 
-    # If no chat found, try to find by session token
+    # Fall back to session token lookup
     session_token = ensure_session_token
     chat = Chat.find_by(session_token: session_token)
 
     if chat
-      session[:chat_id] = chat.id
+      store_chat_id(chat.id)
       return chat
     end
 
-    # Create new chat with session token
     Chat.create!(session_token: session_token).tap do |c|
-      session[:chat_id] = c.id
+      store_chat_id(c.id)
     end
   end
 
   def ensure_session_token
-    session[:chat_session_token] ||= SecureRandom.hex(32)
+    cookies.signed[:chat_session_token] ||= { value: SecureRandom.hex(32), expires: 1.day }
+    cookies.signed[:chat_session_token]
+  end
+
+  def store_chat_id(id)
+    cookies.signed[:chat_id] = { value: id, expires: 1.day }
   end
 
   def generate_chat_export(chat)

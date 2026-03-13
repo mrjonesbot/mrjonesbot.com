@@ -1,5 +1,5 @@
 <%= turbo_frame_tag 'overlay' do %>
-  <% chat_id = session[:chat_id] || "new" %>
+  <% chat_id = cookies.signed[:chat_id] || "new" %>
   <%= render layout: 'layouts/overlay', locals: {
     title: "Chat with AI About Nathan",
     size: 'max-w-4xl',
@@ -12,52 +12,56 @@
   } do %>
     <div data-controller="chat-form" style="display: flex; flex-direction: column; height: 100%;">
       <!-- Messages Area -->
-      <% chat_id = session[:chat_id] || "new" %>
+      <% chat_id = cookies.signed[:chat_id] || "new" %>
       <%= turbo_stream_from "chat_#{chat_id}" %>
 
       <div data-chat-form-target="messages"
            id="chat_messages"
            style="flex: 1; overflow-y: auto; margin-bottom: var(--space-6);">
         <div id="messages">
-          <div id="chat_empty_state" style="text-align: center; padding: var(--space-2) 0; color: var(--text-tertiary);">
-            <p class="text-body" style="margin-bottom: var(--space-2);">👋 Hi! I'm an AI that knows Nathan's career story.</p>
-            <p class="text-body">Ask me anything about his experience, achievements, or working style.</p>
-          </div>
+          <% if @chat&.messages&.any? %>
+            <%= render partial: "chats/message", collection: @chat.messages.order(:created_at), as: :message %>
+          <% else %>
+            <div id="chat_empty_state" style="text-align: center; padding: var(--space-2) 0; color: var(--text-tertiary);">
+              <p class="text-body" style="margin-bottom: var(--space-2);">👋 Hi! I'm an AI that knows Nathan's career story.</p>
+              <p class="text-body">Ask me anything about his experience, achievements, or working style.</p>
+            </div>
 
-          <!-- Suggested Questions -->
-          <div id="suggested_questions" style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6);">
-            <% [
-              "What's Nathan's experience with Rails and Hotwire?",
-              "Tell me about Nathan's approach to building SaaS products",
-              "What open source projects has Nathan built?",
-              "How does Nathan approach technical leadership?"
-            ].each do |question| %>
-              <%= button_to ask_chat_path(id: "new", message: question),
-                  method: :post,
-                  data: { turbo_frame: "messages" },
-                  class: "btn btn--ghost",
-                  style: "
-                    text-align: left;
-                    justify-content: flex-start;
-                    white-space: normal;
-                    word-break: break-word;
-                    box-sizing: border-box;
-                    padding: var(--space-4);
-                    border: 1px solid var(--border-medium);
-                    border-radius: var(--radius-md);
-                    background: var(--bg-card-subtle);
-                    color: var(--text-secondary);
-                    font-size: var(--text-base);
-                    transition: all var(--duration-fast) var(--ease-out);
-                    width: 100%;
-                    cursor: pointer;
-                  ",
-                  onmouseover: "this.style.borderColor='var(--accent-border)'; this.style.background='var(--bg-card)'",
-                  onmouseout: "this.style.borderColor='var(--border-medium)'; this.style.background='var(--bg-card-subtle)'" do %>
-                "<%= question %>"
+            <!-- Suggested Questions -->
+            <div id="suggested_questions" style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6);">
+              <% [
+                "What's Nathan's experience with Rails and Hotwire?",
+                "Tell me about Nathan's approach to building SaaS products",
+                "What open source projects has Nathan built?",
+                "How does Nathan approach technical leadership?"
+              ].each do |question| %>
+                <%= button_to ask_chat_path(id: "new", message: question),
+                    method: :post,
+                    data: { turbo_frame: "messages" },
+                    class: "btn btn--ghost",
+                    style: "
+                      text-align: left;
+                      justify-content: flex-start;
+                      white-space: normal;
+                      word-break: break-word;
+                      box-sizing: border-box;
+                      padding: var(--space-4);
+                      border: 1px solid var(--border-medium);
+                      border-radius: var(--radius-md);
+                      background: var(--bg-card-subtle);
+                      color: var(--text-secondary);
+                      font-size: var(--text-base);
+                      transition: all var(--duration-fast) var(--ease-out);
+                      width: 100%;
+                      cursor: pointer;
+                    ",
+                    onmouseover: "this.style.borderColor='var(--accent-border)'; this.style.background='var(--bg-card)'",
+                    onmouseout: "this.style.borderColor='var(--border-medium)'; this.style.background='var(--bg-card-subtle)'" do %>
+                  "<%= question %>"
+                <% end %>
               <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       </div>
 
