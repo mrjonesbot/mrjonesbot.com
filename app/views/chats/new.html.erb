@@ -17,9 +17,9 @@
 
       <div data-chat-form-target="messages"
            id="chat_messages"
-           style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6);">
+           style="flex: 1; overflow-y: auto; margin-bottom: var(--space-6);">
         <div id="messages">
-          <div id="chat_empty_state" style="text-align: center; padding: var(--space-8) 0; color: var(--text-tertiary);">
+          <div id="chat_empty_state" style="text-align: center; padding: var(--space-2) 0; color: var(--text-tertiary);">
             <p class="text-body" style="margin-bottom: var(--space-2);">👋 Hi! I'm an AI that knows Nathan's career story.</p>
             <p class="text-body">Ask me anything about his experience, achievements, or working style.</p>
           </div>
@@ -38,6 +38,10 @@
                   class: "btn btn--ghost",
                   style: "
                     text-align: left;
+                    justify-content: flex-start;
+                    white-space: normal;
+                    word-break: break-word;
+                    box-sizing: border-box;
                     padding: var(--space-4);
                     border: 1px solid var(--border-medium);
                     border-radius: var(--radius-md);

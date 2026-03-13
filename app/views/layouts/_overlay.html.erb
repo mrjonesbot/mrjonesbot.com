@@ -17,7 +17,7 @@
              style="border-radius: 0; border-left: 1px solid var(--border-medium); box-shadow: var(--shadow-popover);">
 
           <!-- Header -->
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-5); border-bottom: 1px solid var(--border-medium);">
+          <div class="overlay-header" style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-5); border-bottom: 1px solid var(--border-medium);">
             <h2 id="slide-over-title" class="text-heading"><%= title %></h2>
             <div style="display: flex; align-items: center; gap: var(--space-4);">
               <% if local_assigns[:header_actions] %>
@@ -35,7 +35,7 @@
           </div>
 
           <!-- Content -->
-          <div style="flex: 1; overflow-y: auto; padding: var(--space-5);">
+          <div class="overlay-content" style="flex: 1; overflow-y: auto; padding: var(--space-5);">
             <%= yield %>
           </div>
         </div>

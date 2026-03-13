@@ -750,6 +750,12 @@ body {
 }
 
 
+/* --- Overlay mobile padding --- */
+@media (max-width: 640px) {
+  .overlay-header { padding: var(--space-3) !important; }
+  .overlay-content { padding: 0 !important; }
+}
+
 /* ------------------------------------------------------------
    USAGE REFERENCE
    ─────────────────────────────────────────────────────────
