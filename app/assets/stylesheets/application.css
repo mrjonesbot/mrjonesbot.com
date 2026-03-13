@@ -48,6 +48,16 @@
   --status-unavailable:     #e05040;
   --status-unavailable-bg:  #e0504018;
 
+  /* --- Skills assessment --- */
+  --skills-strong-bg:       #f0f8f4;
+  --skills-strong-border:   rgba(34, 196, 122, 0.2);
+  --skills-strong-accent:   #1a8a58;
+  --skills-strong-label:    #1a8a58;
+  --skills-gaps-bg:         #f8f4ee;
+  --skills-gaps-border:     rgba(180, 140, 40, 0.2);
+  --skills-gaps-accent:     #9a7020;
+  --skills-gaps-label:      #9a7020;
+
   /* --- Borders --- */
   --border-subtle:    rgba(0, 0, 0, 0.06);
   --border-medium:    rgba(0, 0, 0, 0.12);
@@ -164,6 +174,15 @@
   --status-available:     #34d98a;
   --status-available-bg:  #34d98a18;
 
+  --skills-strong-bg:       linear-gradient(135deg, #1a3328 0%, #0e1e16 100%);
+  --skills-strong-border:   rgba(52, 217, 138, 0.15);
+  --skills-strong-accent:   #34d98a;
+  --skills-strong-label:    rgba(52, 217, 138, 0.7);
+  --skills-gaps-bg:         linear-gradient(135deg, #3a3018 0%, #24200e 100%);
+  --skills-gaps-border:     rgba(217, 187, 52, 0.15);
+  --skills-gaps-accent:     #d9bb34;
+  --skills-gaps-label:      rgba(217, 187, 52, 0.7);
+
   --border-subtle:    rgba(255, 255, 255, 0.05);
   --border-medium:    rgba(255, 255, 255, 0.08);
   --border-strong:    rgba(255, 255, 255, 0.16);
@@ -209,6 +228,15 @@
 
     --status-available:     #34d98a;
     --status-available-bg:  #34d98a18;
+
+    --skills-strong-bg:       linear-gradient(135deg, #1a3328 0%, #0e1e16 100%);
+    --skills-strong-border:   rgba(52, 217, 138, 0.15);
+    --skills-strong-accent:   #34d98a;
+    --skills-strong-label:    rgba(52, 217, 138, 0.7);
+    --skills-gaps-bg:         linear-gradient(135deg, #3a3018 0%, #24200e 100%);
+    --skills-gaps-border:     rgba(217, 187, 52, 0.15);
+    --skills-gaps-accent:     #d9bb34;
+    --skills-gaps-label:      rgba(217, 187, 52, 0.7);
 
     --border-subtle:    rgba(255, 255, 255, 0.05);
     --border-medium:    rgba(255, 255, 255, 0.08);
@@ -471,6 +499,32 @@ body {
 
 .skills-grid .card:hover {
   transform: none;
+}
+
+.skills-grid .card--strong {
+  background: var(--skills-strong-bg);
+  border-color: var(--skills-strong-border);
+}
+
+.skills-grid .card--strong .card__label {
+  color: var(--skills-strong-label);
+}
+
+.skills-grid .card--strong .skills-icon {
+  color: var(--skills-strong-accent);
+}
+
+.skills-grid .card--gaps {
+  background: var(--skills-gaps-bg);
+  border-color: var(--skills-gaps-border);
+}
+
+.skills-grid .card--gaps .card__label {
+  color: var(--skills-gaps-label);
+}
+
+.skills-grid .card--gaps .skills-icon {
+  color: var(--skills-gaps-accent);
 }
 
 .skills-list {

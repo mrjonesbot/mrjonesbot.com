@@ -223,11 +223,11 @@
     <!-- Strengths / Moderate / Gaps Section -->
     <div class="skills-grid" style="margin-top: var(--space-16);">
       <!-- Strong -->
-      <div class="card" style="background: linear-gradient(135deg, #1a4d2e 0%, #0d2818 100%); border-color: rgba(52, 217, 138, 0.2);">
-        <p class="card__label" style="color: rgba(52, 217, 138, 0.7);">Strong</p>
+      <div class="card card--strong">
+        <p class="card__label">Strong</p>
         <ul class="skills-list">
           <% @self_assessment[:strong].each do |skill| %>
-            <li><span class="skills-icon" style="color: #34d98a;">&#10003;</span> <%= skill %></li>
+            <li><span class="skills-icon">&#10003;</span> <%= skill %></li>
           <% end %>
         </ul>
       </div>
@@ -243,11 +243,11 @@
       </div>
 
       <!-- Gaps -->
-      <div class="card" style="background: linear-gradient(135deg, #5c4a1e 0%, #3a2e0e 100%); border-color: rgba(217, 187, 52, 0.2);">
-        <p class="card__label" style="color: rgba(217, 187, 52, 0.7);">Gaps (I'll Tell You)</p>
+      <div class="card card--gaps">
+        <p class="card__label">Gaps (I'll Tell You)</p>
         <ul class="skills-list">
           <% @self_assessment[:gaps].each do |skill| %>
-            <li><span class="skills-icon" style="color: #d9bb34;">&#10005;</span> <%= skill %></li>
+            <li><span class="skills-icon">&#10005;</span> <%= skill %></li>
           <% end %>
         </ul>
       </div>
